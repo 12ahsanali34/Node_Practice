@@ -9,10 +9,11 @@ db.authenticate()
 
 
 const app = express();
+app.use(bodyParser.json())
 
-app.get('/',(req, res)=> res.send("INDEX"))
+app.get(['/','/update','/get-user'], require('./router/users'))
+app.post(['/add'], require('./router/users'))
 
-app.get('/users', require('./router/users'))
 
 const PORT = process.env.PORT || 8000
 
