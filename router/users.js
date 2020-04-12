@@ -17,19 +17,41 @@ router.get('/',(req, res) => {
 })
 
 router.post('/add',(req, res) => {
-    const { name, address } = req.body
-    UserModel.create({
-        name,
-        address
-    })
+    const { name, address, email } = req.body
+    console.log("email", req.body)
+
+    UserModel.findAll({
+        attributes: ['name','address','email'],
+        where: {
+            email: email
+        }
+      })
     .then(users=> {
-        res.send({
-            status:200,
-            message:'user added.'
-        })
-        res.end()
+        console.log("users", users.length)
+        if(users.length == 0){
+            UserModel.create({
+                name,
+                address,
+                email
+            })
+            .then(user=> {
+                res.send({
+                    status:200,
+                    message:'user added.'
+                })
+                res.end()
+            })
+            .catch(err=> console.log(err, ' Error res'))
+        }
+        else{
+            res.send({
+                status:400,
+                message:'user is already exist.'
+            })
+        }
     })
     .catch(err=> console.log(err, ' Error res'))
+    
 })
 
 router.get('/update',(req, res) => {

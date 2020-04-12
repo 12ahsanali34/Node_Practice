@@ -13,6 +13,9 @@ const Actors = db.define('users',{
     },
     address:{
         type:Sequelize.STRING,
+    },
+    email:{
+        type:Sequelize.STRING,
     }
 },{
     timestamps: false

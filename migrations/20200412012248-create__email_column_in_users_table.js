@@ -3,7 +3,7 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.addColumn('users', 'email', {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       after: "address"
     });
   },
